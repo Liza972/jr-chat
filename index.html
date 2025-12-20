@@ -1,0 +1,161 @@
+Loading..., [21.12.2025 1:08]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн Чат</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-comments"></i> Онлайн Чат</h1>
+                <div class="connection-status">
+                    <span id="status-indicator" class="status-indicator offline"></span>
+                    <span id="status-text">Подключение...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="chat-container">
+                <!-- Панель пользователя -->
+                <div class="user-panel">
+                    <div class="user-info">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h3>Ваш профиль</h3>
+                            <div class="username-input">
+                                <label for="username">
+                                    <i class="fas fa-user-tag"></i> Имя пользователя:
+                                </label>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        id="username" 
+                                        placeholder="Введите ваше имя"
+                                        maxlength="50"
+                                    >
+                                    <button id="save-username" class="btn-save">
+                                        <i class="fas fa-save"></i> Сохранить
+                                    </button>
+                                </div>
+                                <div class="username-hint">
+                                    <small>Имя будет сохранено автоматически</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-info">
+                        <div class="info-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Участники онлайн</h4>
+                                <p id="online-count">Загрузка...</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Всего сообщений</h4>
+                                <p id="total-messages">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Чат -->
+                <div class="chat-area">
+                    <div class="messages-container" id="messages-container">
+                        <div class="welcome-message">
+                            <div class="welcome-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <h2>Добро пожаловать в чат!</h2>
+                            <p>Начните общение, отправив ваше первое сообщение.</p>
+                            <div class="features-list">
+                                <span><i class="fas fa-check"></i> Автообновление каждые 3 секунды</span>
+                                <span><i class="fas fa-check"></i> Поддержка смайликов 😊</span>
+
+Loading..., [21.12.2025 1:08]
+<span><i class="fas fa-check"></i> Форматирование кода</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Панель ввода сообщения -->
+                    <div class="message-input-area">
+                        <div class="input-tools">
+                            <button class="tool-btn" title="Вставить смайлик" onclick="insertEmoji('😊')">
+                                <i class="far fa-smile"></i>
+                            </button>
+                            <button class="tool-btn" title="Вставить код" onclick="insertCode()">
+                                <i class="fas fa-code"></i>
+                            </button>
+                            <button class="tool-btn" title="Очистить поле" onclick="clearMessage()">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <div class="char-counter">
+                                <span id="char-count">0</span>/500
+                            </div>
+                        </div>
+                        
+                        <div class="message-input-wrapper">
+                            <textarea 
+                                id="message-input" 
+                                placeholder="Введите ваше сообщение..." 
+                                maxlength="500"
+                                rows="3"
+                            ></textarea>
+                            <button id="send-btn" class="btn-send">
+                                <i class="fas fa-paper-plane"></i> Отправить
+                            </button>
+                        </div>
+                        
+                        <div class="emoji-preview">
+                            <small>Попробуйте: :) = 😊, :( = 😞, :D = 😃, ;) = 😉, :heart: = ❤️</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Онлайн Чат v1.0 • Сообщения обновляются каждые 3 секунды</p>
+            <div class="footer-controls">
+                <button id="refresh-btn" class="btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Обновить вручную
+                </button>
+                <button id="clear-local-btn" class="btn-secondary">
+                    <i class="fas fa-trash-alt"></i> Очистить локальные данные
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно для уведомлений -->
+    <div id="notification-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Уведомление</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-message">
+                <!-- Сообщение будет вставлено сюда -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
